@@ -1,0 +1,31 @@
+<%- include('partials/header') %>
+
+<div class="jumbotron text-center">
+  <div class="container">
+    <img style="height: 200px;" src="images/logo.png" alt="logo">
+    <hr>
+
+    <% if (user.length!==0) { %>
+      <h1>The Transactions are</h1>
+      <div class="box">
+      <% user.forEach(function(newUser){ %>
+
+            <p><%=  newUser.payer  %> pays <%=  newUser.money  %> to <%=  newUser.receiver %> </p>
+
+      <% }) %>
+    <% } else { %>
+      <h1>No Transactions found</h1>
+      <p>Split bills to see the transactions</p>
+    <% } %>
+
+
+
+    <a class="btn btn-light btn-lg" href="/logout" role="button">Log Out</a>
+    <% if (user.length!==0) { %>
+    <a class="btn btn-dark btn-lg" href="/delete" style="background: #bf261c;" role="button">Delete Transactions</a>
+    <% } %>
+    <a class="btn btn-dark btn-lg" href="/mode" role="button">Select Mode</a>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

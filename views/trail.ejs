@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Matrix Creation</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+
+    table, th, td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="jumbotron text-center">
+    <div class="container">
+      <!-- <i class="fas fa-key fa-6x"></i> -->
+      <img style="height: 200px;" src="images/logo.png" alt="logo">
+
+  <h2>Matrix Creation</h2>
+  <%  console.log(num); %>
+  <%  console.log(names); %>
+  <%  console.log(matrix); %>
+
+
+  <!-- <script>
+function validateForm() {
+  n=0;
+  names.length=0;
+  matrix.length=0;
+  return true; // Allow form submission
+}
+</script> -->
+
+  <% if (!num) { %>
+    <form method="POST" action="/trail">
+      <label for="numPeople">Enter the number of people:</label>
+      <input type="number" id="numPeople" name="numPeople" required>
+      <button type="submit">Create Matrix</button>
+    </form>
+  <% } else if (!names || names.length===0) { %>
+    <form method="POST" action="/trail">
+      <h3>Enter the names of the people:</h3>
+      <% for (var i = 0; i < num; i++) { %>
+        <label for="<%= 'name-' + i %>">Person <%= i + 1 %>:</label>
+        <input type="text" id="<%= 'name-' + i %>" name="<%= 'name-' + i %>" required><br>
+      <% } %>
+      <button type="submit">Submit Names</button>
+    </form>
+  <% } else if (!matrix || matrix.length===0) { %>
+    <form method="POST" action="/trail">
+      <h3>Enter the matrix values:</h3>
+      <table style="
+    margin-left: auto;
+    margin-right: auto;
+" >
+        <thead>
+          <tr>
+            <th></th>
+            <% for (var i = 0; i < num; i++) { %>
+              <th><%= names[i] %></th>
+            <% } %>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (var i = 0; i < num; i++) { %>
+            <tr>
+              <th><%= names[i] %></th>
+              <% for (var j = 0; j < num; j++) { %>
+                <% if (i !== j) { %>
+                  <td>
+                    <label for="<%= 'amount-' + i + '-' + j %>">
+                      <%= names[i] %> owes <%= names[j] %>:
+                    </label>
+                    <input type="number" id="<%= 'amount-' + i + '-' + j %>" name="<%= 'amount-' + i + '-' + j %>" required>
+                  </td>
+                <% } else { %>
+                  <td>0</td>
+                <% } %>
+              <% } %>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+      <button type="submit">Submit Matrix</button>
+    </form>
+  <% } %>
+
+
+
+  <% if (typeof payingP !== 'undefined') { %>
+  <% if (payingP.length === 0) { %>
+    <!-- <p>Submit to see the Transactions</p> -->
+  <% } else { %>
+      <h1>Transactions</h1>
+      <% payingP.forEach(function(item, index) { %>
+      <p><%= item %> pays <%=money[index]%> to <%=gettingP[index]%></p>
+      <% }); %>
+  <% } %>
+
+  <% } %>
+  <br>
+  <a class="btn btn-light btn-lg" style="margin-right: 20px;" href="/logout" role="button">Log Out</a>
+
+  <a class="btn btn-dark btn-lg" href="/transactions" role="button">Show Transactions</a>
+</div>
+</div>
+</body>
+</html>

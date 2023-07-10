@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Matrix Creation</title>
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+
+    table, th, td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Matrix Creation</h2>
+
+  <form method="POST" action="/mat">
+    <label for="numPeople">Enter the number of people:</label>
+    <input type="number" id="numPeople" name="numPeople" required>
+    <button type="submit">Create Matrix</button>
+  </form>
+
+  <% if (matrix) { %>
+    <h3>Enter the names and values:</h3>
+    <form method="POST" action="/calculate">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <% for (var i = 0; i < names.length; i++) { %>
+              <th><%= names[i] %></th>
+            <% } %>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (var i = 0; i < matrix.length; i++) { %>
+            <tr>
+              <th><%= names[i] %></th>
+              <% for (var j = 0; j < matrix.length; j++) { %>
+                <% if (i !== j) { %>
+                  <td>
+                    <% if (names[i] && names[j]) { %>
+                      <label for="<%= 'amount-' + i + '-' + j %>">
+                        <%= names[i] %> owes <%= names[j] %>:
+                      </label>
+                    <% } %>
+                    <input type="number" id="<%= 'amount-' + i + '-' + j %>" name="<%= 'amount-' + i + '-' + j %>" required>
+                  </td>
+                <% } else { %>
+                  <td>0</td>
+                <% } %>
+              <% } %>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+      <button type="submit">Calculate</button>
+    </form>
+  <% } %>
+  <script>
+    const form = document.querySelector('form');
+    form.addEventListener('submit', (event) => {
+      const names = document.querySelectorAll('input[name^="name"]');
+      const nameValues = Array.from(names).map((input) => input.value);
+      const hiddenInput = document.createElement('input');
+      hiddenInput.setAttribute('type', 'hidden');
+      hiddenInput.setAttribute('name', 'names');
+      hiddenInput.setAttribute('value', JSON.stringify(nameValues));
+      form.appendChild(hiddenInput);
+    });
+  </script>
+</body>
+</html>

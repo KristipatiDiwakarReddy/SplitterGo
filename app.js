@@ -9,7 +9,7 @@ const session = require('express-session');
 const passport = require('passport');
 const passportLocalMongoose = require('passport-local-mongoose');
 const qs = require('qs');
-
+const PORT = process.env.PORT || 3000;
 
 const app  = express();
 
@@ -553,6 +553,6 @@ User.findOne({username}).then(function(foundUser){
 
 */
 
-app.listen(3000, function(){
-  console.log("Successfully connected on port 3000");
+app.listen(PORT, function(){
+  console.log(`Successfully connected on port ${PORT}`);
 });

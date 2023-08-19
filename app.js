@@ -10,6 +10,8 @@ const passport = require('passport');
 const passportLocalMongoose = require('passport-local-mongoose');
 const qs = require('qs');
 const PORT = process.env.PORT || 3000;
+const MONGOUSER = process.env.MONGOUSER;
+const MONGOPASS = process.env.MONGOPASS;
 
 const app  = express();
 
@@ -37,7 +39,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-mongoose.connect("mongodb://127.0.0.1:27017/userDB", {useNewUrlParser: true});
+mongoose.connect("mongodb+srv://"+MONGOUSER+":"+MONGOPASS+"@cluster0.ylugduj.mongodb.net/userDB", {useNewUrlParser: true});
 
 const userSchema = new mongoose.Schema({
   username: String,
